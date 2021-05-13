@@ -1,6 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import { fromEvent, interval } from 'rxjs';
 import { buffer, debounceTime, filter } from 'rxjs/operators';
+import styled from 'styled-components';
+
+const Timer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const Time = styled.h1`
+  font-size: 6rem;
+  margin: 30px 0;
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+`;
+
+const Button = styled.button`
+  border: 2px solid #333;
+  background-color: transparent;
+  padding: 10px 30px;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background-color: #333;
+    color: #fff;
+  }
+`;
 
 export default function App() {
   const [time, setTime] = useState(0);
@@ -52,17 +85,19 @@ export default function App() {
   }, [enabled]);
 
   return (
-    <div>
-      <h1>{new Date(time).toISOString().slice(-13, -5)}</h1>
-      <button className='toggleTimerButton' type='button'>
-        {!enabled ? 'Start' : 'Stop'}
-      </button>
-      <button className='resetButton' type='button'>
-        Reset
-      </button>
-      <button className='waitButton' type='button'>
-        Wait
-      </button>
-    </div>
+    <Timer>
+      <Time>{new Date(time).toISOString().slice(-13, -5)}</Time>
+      <ButtonGroup>
+        <Button className='toggleTimerButton' type='button'>
+          {!enabled ? 'Start' : 'Stop'}
+        </Button>
+        <Button className='resetButton' type='button'>
+          Reset
+        </Button>
+        <Button className='waitButton' type='button'>
+          Wait
+        </Button>
+      </ButtonGroup>
+    </Timer>
   );
 }
